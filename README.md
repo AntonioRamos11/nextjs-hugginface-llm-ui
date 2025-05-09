@@ -1,117 +1,128 @@
 <div align="center">
-  <img src="ollama-nextjs-ui.gif">
+  <img src="huggingface-nextjs-ui.gif">
 </div>
 
 <h1 align="center">
-  Fully-featured web interface for Ollama LLMs
+  Fully-featured web interface for HuggingFace LLMs
 </h1>
 
 <div align="center">
   
-![GitHub Repo stars](https://img.shields.io/github/stars/jakobhoeg/nextjs-ollama-llm-ui)
+![GitHub Repo stars](https://img.shields.io/github/stars/jakobhoeg/nextjs-hugginface-llm-ui)
   
 </div>
 
 Get up and running with Large Language Models **quickly**, **locally** and even **offline**.
-This project aims to be the easiest way for you to get started with LLMs. No tedious and annoying setup required!
+This project aims to be the easiest way for you to get started with HuggingFace LLMs. No tedious and annoying setup required!
 
-> This is a hobby project. If you want a more complete experience, I suggest taking a look at [this](https://github.com/open-webui/open-webui) instead.
+> This is a hobby project that provides a simple way to interact with DeepSeek and other HuggingFace models through a FastAPI backend with an Ollama-compatible API.
 
 # Features ✨
 
 - **Beautiful & intuitive UI:** Inspired by ChatGPT, to enhance similarity in the user experience.
+- **HuggingFace models support:** Interface with powerful DeepSeek and other models from HuggingFace.
+- **Ollama API compatibility:** Uses a FastAPI backend that implements Ollama-compatible endpoints.
 - **Fully local:** Stores chats in localstorage for convenience. No need to run a database.
 - **Fully responsive:** Use your phone to chat, with the same ease as on desktop.
 - **Easy setup:** No tedious and annoying setup required. Just clone the repo and you're good to go!
-- **Code syntax highligting:** Messages that include code, will be highlighted for easy access.
+- **Code syntax highlighting:** Messages that include code, will be highlighted for easy access.
 - **Copy codeblocks easily:** Easily copy the highlighted code with one click.
-- **Download/Pull & Delete models:** Easily download and delete models directly from the interface.
-- **Switch between models:** Switch between models fast with a click.
+- **Switch between models:** Switch between HuggingFace models fast with a click.
 - **Chat history:** Chats are saved and easily accessed.
 - **Light & Dark mode:** Switch between light & dark mode.
-
-# Preview
-
-https://github.com/jakobhoeg/nextjs-ollama-llm-ui/assets/114422072/08eaed4f-9deb-4e1b-b87a-ba17d81b9a02
 
 # Requisites ⚙️
 
 To use the web interface, these requisites must be met:
 
-1. Download [Ollama](https://ollama.com/download) and have it running. Or run it in a Docker container. Check the [docs](https://github.com/ollama/ollama) for instructions.
-2. Node.js (18+) and npm is required. [Download](https://nodejs.org/en/download)
+1. Python environment for running the FastAPI backend (Python 3.8+ recommended)
+2. Node.js (18+) and npm for the frontend. [Download](https://nodejs.org/en/download)
 
-# Quick start with Docker
+# Backend Setup
 
-## Installation with prebuilt Docker image
-
-- **If Ollama is running on your pc**:
+**1. Clone the repository:**
 
 ```
-docker run -d -p 8080:3000 --add-host=host.docker.internal:host-gateway -e OLLAMA_URL=http://host.docker.internal:11434 --name nextjs-ollama-ui --restart always jakobhoeg/nextjs-ollama-ui:latest
+git clone https://github.com/jakobhoeg/nextjs-hugginface-llm-ui
 ```
 
-- **If Ollama is on a different server than the Web UI**:
+**2. Install Python requirements:**
 
 ```
-docker run -d -p 8080:3000 --add-host=host.docker.internal:host-gateway -e OLLAMA_URL=http://example.com:11434 --name nextjs-ollama-ui --restart always jakobhoeg/nextjs-ollama-ui:latest
+pip install fastapi uvicorn pydantic transformers torch
 ```
 
-> You can also change the default 8080 port if you wish.
-
-# Installation locally 📖
-
-[![Packaging status](https://repology.org/badge/vertical-allrepos/nextjs-ollama-llm-ui.svg?columns=3)](https://repology.org/project/nextjs-ollama-llm-ui/versions)
-
-Use a pre-build package from one of the supported package managers to run a local environment of the web interface.
-Alternatively you can install from source with the instructions below.
-
-> [!NOTE]  
-> If your frontend runs on something other than `http://localhost` or `http://127.0.0.1`, you'll need to set the OLLAMA_ORIGINS to your frontend url.
->
-> This is also stated in the [documentation](https://github.com/ollama/ollama/blob/main/docs/faq.md#how-do-i-configure-ollama-server):
->
-> `Ollama allows cross-origin requests from 127.0.0.1 and 0.0.0.0 by default. Additional origins can be configured with OLLAMA_ORIGINS`
-
-## Install from source
-
-**1. Clone the repository to a directory on your pc via command prompt:**
+**3. Start the FastAPI backend:**
 
 ```
-git clone https://github.com/jakobhoeg/nextjs-ollama-llm-ui
+python app.py
 ```
 
-**2. Open the folder:**
+This will start the FastAPI server on http://localhost:11435, which implements Ollama-compatible endpoints but uses HuggingFace models.
+
+# Frontend Setup
+
+**1. Open the folder:**
 
 ```
-cd nextjs-ollama-llm-ui
+cd nextjs-hugginface-llm-ui
 ```
 
-**3. Rename the `.example.env` to `.env`:**
+**2. Rename the `.example.env` to `.env`:**
 
 ```
 mv .example.env .env
 ```
 
-**4. If your instance of Ollama is NOT running on the default ip-address and port, change the variable in the .env file to fit your usecase:**
+**3. Update the OLLAMA_URL in the .env file to point to the FastAPI backend:**
 
 ```
-OLLAMA_URL="http://localhost:11434"
+OLLAMA_URL="http://localhost:11435"
 ```
 
-**5. Install dependencies:**
+**4. Install dependencies:**
 
 ```
 npm install
 ```
 
-**6. Start the development server:**
+**5. Start the development server:**
 
 ```
 npm run dev
 ```
 
-**5. Go to [localhost:3000](http://localhost:3000) and start chatting with your favourite model!**
+**6. Go to [localhost:3000](http://localhost:3000) and start chatting with HuggingFace models!**
+
+# Available Models
+
+The FastAPI backend currently supports the following models:
+f
+- **deepcoder-1.5b**: Optimized for coding tasks
+
+You can add more models by updating the models dictionary in the FastAPI backend.
+
+# Docker Setup
+
+## Running with Docker
+
+Build and run the FastAPI backend:
+
+```
+run the api_server.py  - choose your port actually is 11435
+```
+
+
+# Tech stack
+
+[NextJS](https://nextjs.org/) - React Framework for the Web
+[FastAPI](https://fastapi.tiangolo.com/) - Modern API framework for Python
+[HuggingFace Transformers](https://huggingface.co/docs/transformers/index) - State-of-the-art ML models
+[TailwindCSS](https://tailwindcss.com/) - Utility-first CSS framework
+[shadcn-ui](https://ui.shadcn.com/) - UI component built using Radix UI and Tailwind CSS
+[shadcn-chat](https://github.com/jakobhoeg/shadcn-chat) - Chat components for NextJS/React projects
+[Framer Motion](https://www.framer.com/motion/) - Motion/animation library for React
+[Lucide Icons](https://lucide.dev/) - Icon library
 
 # Upcoming features
 
@@ -121,24 +132,5 @@ This is a to-do list consisting of upcoming features.
 - ✅ Code syntax highlighting
 - ✅ Ability to send an image in the prompt to utilize vision language models.
 - ✅ Ability to regenerate responses
+- ✅ Support for HuggingFace models
 - ⬜️ Import and export chats
-
-# Tech stack
-
-[NextJS](https://nextjs.org/) - React Framework for the Web
-
-[TailwindCSS](https://tailwindcss.com/) - Utility-first CSS framework
-
-[shadcn-ui](https://ui.shadcn.com/) - UI component built using Radix UI and Tailwind CSS
-
-[shadcn-chat](https://github.com/jakobhoeg/shadcn-chat) - Chat components for NextJS/React projects
-
-[Framer Motion](https://www.framer.com/motion/) - Motion/animation library for React
-
-[Lucide Icons](https://lucide.dev/) - Icon library
-
-# Helpful links
-
-[Medium Article](https://medium.com/@bartek.lewicz/launch-your-own-chatgpt-clone-for-free-on-colab-shareable-and-online-in-less-than-10-minutes-da19e44be5eb) - How to launch your own ChatGPT clone for free on Google Colab. By Bartek Lewicz.
-
-[Lobehub mention](https://lobehub.com/blog/5-ollama-web-ui-recommendation#5-next-js-ollama-llm-ui) - Five Excellent Free Ollama WebUI Client Recommendations
